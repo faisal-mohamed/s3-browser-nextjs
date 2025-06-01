@@ -1,0 +1,62 @@
+.cognito-login-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  
+  .auth-card {
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      
+      h3 {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  .authenticated-content {
+    .user-info {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .tokens-section {
+      margin-top: 1.5rem;
+      
+      .token-display {
+        margin-bottom: 1.5rem;
+        
+        h5 {
+          margin-bottom: 0.5rem;
+        }
+        
+        .token-content {
+          background-color: #f8f9fa;
+          border-radius: 0.25rem;
+          
+          textarea {
+            font-family: monospace;
+            font-size: 0.8rem;
+            resize: vertical;
+          }
+          
+          .token-json {
+            padding: 1rem;
+            margin: 0;
+            background-color: #f8f9fa;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            max-height: 300px;
+            overflow-y: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+

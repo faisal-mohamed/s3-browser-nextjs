@@ -1,0 +1,60 @@
+.common-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff; // white background
+  border-bottom: 3px solid #007d92; // blue line
+  padding: 10px 20px;
+  position: relative;
+
+  .header-left {
+    .header-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #007d92; // blue text
+      margin: 0;
+    }
+  }
+
+  .header-right {
+    position: relative;
+
+    .profile-icon {
+      cursor: pointer;
+      color: #007d92; // blue icon
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 150px;
+      z-index: 100;
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          padding: 10px 15px;
+          cursor: pointer;
+          transition: background 0.2s;
+
+          &:hover {
+            background-color: #f0f0f0;
+          }
+        }
+      }
+    }
+  }
+}
