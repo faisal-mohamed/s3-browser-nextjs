@@ -50,13 +50,13 @@ const createAuthService = () => {
   const signOut = async () => {
     try {
       await amplifySignOut();
-      console.log('✅ Signed out successfully');
+      //console.log('✅ Signed out successfully');
       // Clear any stored credentials
       sessionStorage.removeItem('aws-credentials');
     } catch (error : any ) {
       // If the error is about not being authenticated, just log it but don't throw
       if (error.message?.includes('User needs to be authenticated')) {
-        console.log('ℹ️ User was not authenticated, no need to sign out');
+        //console.log('ℹ️ User was not authenticated, no need to sign out');
         return;
       }
       console.error('Error signing out:', error);
@@ -107,7 +107,7 @@ const createAuthService = () => {
     try {
       // First check if we have valid AWS credentials in session storage
       if (hasValidStoredCredentials()) {
-        console.log('✅ Valid AWS credentials found in session storage');
+        //console.log('✅ Valid AWS credentials found in session storage');
         return true;
       }
       

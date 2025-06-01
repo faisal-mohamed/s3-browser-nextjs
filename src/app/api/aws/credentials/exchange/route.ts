@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     
     // Check if we've already successfully processed this token
     if (processedTokens.has(requestKey)) {
-      console.log('✅ Token already successfully processed, returning cached result');
+      // console.log('✅ Token already successfully processed, returning cached result');
       return NextResponse.json({ 
         message: 'Token already processed successfully',
         success: true,
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 
     // Check if there's already an ongoing request for this token
     if (ongoingRequests.has(requestKey)) {
-      console.log('⚠️ Duplicate token exchange request detected, waiting for existing request');
+      //('⚠️ Duplicate token exchange request detected, waiting for existing request');
       try {
         // Wait for the existing request to complete
         const result = await ongoingRequests.get(requestKey);
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
       
       while (retryCount <= MAX_RETRIES) {
         try {
-          console.log(`Token exchange attempt ${retryCount + 1}/${MAX_RETRIES + 1}`);
+          //console.log(`Token exchange attempt ${retryCount + 1}/${MAX_RETRIES + 1}`);
           
           // Step 1: Exchange token with SSO OIDC
           const ssooidc = new SSOOIDCClient({ 
@@ -86,22 +86,22 @@ export async function POST(req: NextRequest) {
             })
           });
 
-          console.log("Creating token with IAM command");
+          //("Creating token with IAM command");
           const createTokenWithIAMCommand = new CreateTokenWithIAMCommand({
             clientId: oidcClientId,
             grantType: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
             assertion: jwtToken,
           });
 
-          console.log("Sending token exchange request");
+          //console.log("Sending token exchange request");
           const tokenExchangeResponse = await ssooidc.send(createTokenWithIAMCommand);
-          console.log("Token exchange successful");
+          //console.log("Token exchange successful");
 
           const idToken : any = tokenExchangeResponse.idToken;
 
           // Step 2: Decode identity context
           const decodedToken: any = jwt.decode(idToken);
-          console.log('▶ Decoded token claims:', Object.keys(decodedToken));
+          //console.log('▶ Decoded token claims:', Object.keys(decodedToken));
 
           if (!decodedToken['sts:identity_context']) {
             console.warn('⚠️ Token does not contain sts:identity_context claim');
@@ -124,9 +124,9 @@ export async function POST(req: NextRequest) {
             ],
           });
 
-          console.log('▶ Assuming role with identity context');
+          //console.log('▶ Assuming role with identity context');
           const stsResponse = await stsClient.send(assumeRoleCommand);
-          console.log('✅ Role assumed successfully');
+          //console.log('✅ Role assumed successfully');
 
           const assumedCredentials = {
             accessKeyId: stsResponse.Credentials?.AccessKeyId,
@@ -157,7 +157,7 @@ export async function POST(req: NextRequest) {
             retryCount++;
             // Add exponential backoff
             const delay = Math.pow(2, retryCount) * 500;
-            console.log(`Retrying in ${delay}ms...`);
+            //console.log(`Retrying in ${delay}ms...`);
             await new Promise(resolve => setTimeout(resolve, delay));
           } else {
             throw error;

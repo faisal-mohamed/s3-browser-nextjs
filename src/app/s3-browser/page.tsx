@@ -16,6 +16,7 @@ import PageHeader from '@/app/layouts/PageHeader';
 import { useEnvVars } from '../hooks/useEnvVars';
 import { useAppInitialized } from '../context/AppInitContext';
 import { useRouter } from 'next/navigation';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const createAuthAdapter = async (envVars: any) => {
   const region = envVars.VITE_AWS_REGION;
@@ -186,14 +187,14 @@ const S3BrowserWithAdapter = () => {
     try {
       // First check if we have valid AWS credentials in session storage
       if (authService.hasValidStoredCredentials()) {
-        console.log('✅ Valid AWS credentials found in session storage');
+        //console.log('✅ Valid AWS credentials found in session storage');
         return true;
       }
       
       // Otherwise check with Cognito
       const isAuthenticated = await authService.isCognitoAuthenticated();
       if (!isAuthenticated) {
-        console.log('⚠️ User not authenticated, redirecting to login');
+        //console.log('⚠️ User not authenticated, redirecting to login');
         await authService.signOut();
         router.push('/s3-browser-login');
         return false;
@@ -263,41 +264,91 @@ const S3BrowserWithAdapter = () => {
   }, [envVars, isEnvLoading, isReady, router]);
 
   if (!isReady) {
-    return <div>Initializing Cognito...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="text-center">
+          <LoadingSpinner size="lg" />
+          <p className="mt-4 text-lg text-text-secondary">Initializing...</p>
+        </div>
+      </div>
+    );
   }
 
   if (isEnvLoading) {
-    return <div className="text-sm text-gray-500">Loading environment variables...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="text-center">
+          <LoadingSpinner />
+          <p className="mt-4 text-text-secondary">Loading environment variables...</p>
+        </div>
+      </div>
+    );
   }
 
   if (isEnvError) {
-    return <div className="text-sm text-red-500">Failed to load environment configuration</div>;
+    return (
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="card p-8 max-w-md w-full text-center">
+          <div className="text-red-500 text-4xl mb-4">⚠️</div>
+          <h2 className="text-xl font-medium text-text-primary mb-2">Configuration Error</h2>
+          <p className="text-text-secondary mb-6">Failed to load environment configuration</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="btn btn-primary"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  if (isLoading) return <div className="text-sm text-gray-500">Loading S3 Browser...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="text-center">
+          <LoadingSpinner size="lg" />
+          <p className="mt-4 text-lg text-text-secondary">Loading S3 Browser...</p>
+        </div>
+      </div>
+    );
+  }
   
   if (error) {
     return (
-      <div className="text-sm text-red-500">
-        <p>Error: {error}</p>
-        <button 
-          onClick={() => router.push('/s3-browser-login')}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Return to Login
-        </button>
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="card p-8 max-w-md w-full">
+          <div className="text-red-500 text-4xl text-center mb-4">⚠️</div>
+          <h2 className="text-xl font-medium text-text-primary mb-2">Error</h2>
+          <p className="text-text-secondary mb-6">{error}</p>
+          <div className="flex justify-center">
+            <button 
+              onClick={() => router.push('/s3-browser-login')}
+              className="btn btn-primary"
+            >
+              Return to Login
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (!StorageBrowserComponent) {
-    return <div className="text-sm text-gray-500">Initializing StorageBrowser...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="text-center">
+          <LoadingSpinner />
+          <p className="mt-4 text-text-secondary">Initializing StorageBrowser...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="s3-browser-container p-4 rounded shadow-md bg-white">
+    <div className="s3-browser-container fade-in">
       <PageHeader headerName="S3 Browser" />
-      <div className="page-content">
+      <div className="s3-browser-content mt-4">
         <NetworkInterceptor>
           <StorageBrowserComponent />
         </NetworkInterceptor>

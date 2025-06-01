@@ -19,7 +19,7 @@ export default function AppInitializer({ children }: { children: React.ReactNode
           }
         }
       });
-      console.log('✅ Amplify configured with dynamic envs');
+      //console.log('✅ Amplify configured with dynamic envs');
       setInitialized(true);
     }
   }, [envVars, isLoading, initialized]);
