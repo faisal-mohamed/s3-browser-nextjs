@@ -1,5 +1,32 @@
 'use client';
 
+
+
+if (typeof crypto.randomUUID !== "function") {
+  console.warn("[Polyfill] crypto.randomUUID is missing. Applying polyfill...");
+
+  (crypto.randomUUID as unknown as () => string) = () => {
+    const s4 = () =>
+      Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    return (
+      s4() +
+      s4() +
+      "-" +
+      s4() +
+      "-" +
+      s4() +
+      "-" +
+      s4() +
+      "-" +
+      s4() +
+      s4() +
+      s4()
+    );
+  };
+}
+
 import { useEffect, useState } from 'react';
 import { Amplify } from 'aws-amplify';
 import { useEnvVars } from '../hooks/useEnvVars';
