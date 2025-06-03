@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  s3-browser:
+    image: s3-browser:1.0
+    ports:
+      - "3000:3000"
+    environment:
+      - AWS_ACCESS_KEY_ID=your_access_key
+      - AWS_SECRET_ACCESS_KEY=your_secret_key
+      - S3_BUCKET_NAME=your_bucket_name
+      - NODE_ENV=production
+    command: next start -H 0.0.0.0
+    restart: unless-stopped

@@ -1,62 +1,169 @@
+// .cognito-login-container {
+//   display: flex;
+//   justify-content: center;
+//   padding: 2rem;
+  
+//   .auth-card {
+//     width: 100%;
+//     max-width: 800px;
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+//     .card-header {
+//       background-color: #f8f9fa;
+//       border-bottom: 1px solid #dee2e6;
+      
+//       h3 {
+//         margin-bottom: 0;
+//       }
+//     }
+//   }
+  
+//   .authenticated-content {
+//     .user-info {
+//       padding-bottom: 1rem;
+//       border-bottom: 1px solid #dee2e6;
+//     }
+    
+//     .tokens-section {
+//       margin-top: 1.5rem;
+      
+//       .token-display {
+//         margin-bottom: 1.5rem;
+        
+//         h5 {
+//           margin-bottom: 0.5rem;
+//         }
+        
+//         .token-content {
+//           background-color: #f8f9fa;
+//           border-radius: 0.25rem;
+          
+//           textarea {
+//             font-family: monospace;
+//             font-size: 0.8rem;
+//             resize: vertical;
+//           }
+          
+//           .token-json {
+//             padding: 1rem;
+//             margin: 0;
+//             background-color: #f8f9fa;
+//             border-radius: 0.25rem;
+//             font-size: 0.8rem;
+//             max-height: 300px;
+//             overflow-y: auto;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+
+
+
 .cognito-login-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f7f9fc, #e6ecf3);
   padding: 2rem;
-  
+
   .auth-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 800px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    
+    max-width: 500px;
+    padding: 2.5rem 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+
     .card-header {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #dee2e6;
-      
+      text-align: center;
+      margin-bottom: 1.5rem;
+
       h3 {
-        margin-bottom: 0;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #666;
+        margin-top: 0.5rem;
+      }
+    }
+
+    .authenticated-content {
+      .user-info {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 0.95rem;
+      }
+
+      .tokens-section {
+        margin-top: 1.5rem;
+
+        .token-display {
+          margin-bottom: 1.5rem;
+
+          h5 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+          }
+
+          .token-content {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+
+            textarea {
+              width: 100%;
+              font-family: monospace;
+              font-size: 0.85rem;
+              resize: vertical;
+              border: 1px solid #ccc;
+              border-radius: 8px;
+              padding: 0.75rem;
+              margin-top: 0.5rem;
+              background: #fff;
+              transition: border 0.2s ease;
+
+              &:focus {
+                border-color: #3498db;
+                outline: none;
+              }
+            }
+          }
+        }
       }
     }
   }
-  
-  .authenticated-content {
-    .user-info {
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #dee2e6;
-    }
-    
-    .tokens-section {
-      margin-top: 1.5rem;
-      
-      .token-display {
-        margin-bottom: 1.5rem;
-        
-        h5 {
-          margin-bottom: 0.5rem;
-        }
-        
-        .token-content {
-          background-color: #f8f9fa;
-          border-radius: 0.25rem;
-          
-          textarea {
-            font-family: monospace;
-            font-size: 0.8rem;
-            resize: vertical;
-          }
-          
-          .token-json {
-            padding: 1rem;
-            margin: 0;
-            background-color: #f8f9fa;
-            border-radius: 0.25rem;
-            font-size: 0.8rem;
-            max-height: 300px;
-            overflow-y: auto;
-          }
-        }
-      }
-    }
+
+  .spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid #3498db;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 }
-
-
