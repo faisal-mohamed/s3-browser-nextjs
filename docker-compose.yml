@@ -2,13 +2,17 @@ version: '3.8'
 
 services:
   s3-browser:
-    image: s3-browser:1.0
+    image: s3-browser:1.1  # replace with your actual image tag
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
-      - AWS_ACCESS_KEY_ID=your_access_key
-      - AWS_SECRET_ACCESS_KEY=your_secret_key
-      - S3_BUCKET_NAME=your_bucket_name
-      - NODE_ENV=production
-    command: next start -H 0.0.0.0
+      VITE_AWS_IDENTITY_BEARER_ROLE_ARN: arn:aws:iam::282052313374:role/identity-bearer-role
+      VITE_AWS_IDENTITY_APPLICATION_ARN: arn:aws:sso::961341554792:application/ssoins-82102a4829990988/apl-7a13adfc08778b13
+      VITE_AWS_OIDC_CLIENT_ID: arn:aws:sso::961341554792:application/ssoins-82102a4829990988/apl-7a13adfc08778b13
+      BOOTSTRAP_ROLE_ARN: arn:aws:iam::282052313374:role/idc-bootstrap-role
+      VITE_AWS_REGION: ap-southeast-1
+      VITE_COGNITO_USER_POOL_ID: ap-southeast-1_QaH9tC34P
+      VITE_COGNITO_CLIENT_ID: 5iepajui5c3o9i4hp5l9drdcep
+      VITE_S3_BROWSER_ACCOUNT_ID: 282052313374
+      VITE_SERVER_URI: http://localhost
     restart: unless-stopped
