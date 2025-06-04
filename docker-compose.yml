@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   s3-browser:
-    image: s3-browser:1.1  # replace with your actual image tag
+    image: s3-browser-v2:1.3  # replace with your actual image tag
     ports:
       - '3000:3000'
     environment:
